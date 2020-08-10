@@ -1,0 +1,29 @@
+{
+  "name": "freedom-js-support",
+  "version": "1.0.0",
+  "description": "Freedom Javascript Utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ajDesamparado13/freedom-js-support.git"
+  },
+  "keywords": [
+    "freedom",
+    "javascript",
+    "js",
+    "utilities",
+    "support"
+  ],
+  "author": "Allen Jay Desamparado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajDesamparado13/freedom-js-support/issues"
+  },
+  "homepage": "https://github.com/ajDesamparado13/freedom-js-support#readme",
+  "dependencies": {
+    "moment": "^2.27.0"
+  }
+}
