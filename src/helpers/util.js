@@ -111,7 +111,7 @@ export const isMobile = {
     }
 }
 
-export function propSetter( componentProps, paramProps) => {
+export function propSetter( componentProps, paramProps) {
   let propsData = {}
   for (let key in componentProps) {
     let prop = props[key]
