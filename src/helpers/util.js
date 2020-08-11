@@ -111,6 +111,19 @@ export const isMobile = {
     }
 }
 
+export function propSetter( componentProps, paramProps) => {
+  let propsData = {}
+  for (let key in componentProps) {
+    let prop = props[key]
+    if (typeof paramsProps[key] === 'undefined') {
+      propsData[key] = prop.default || prop
+    } else {
+      propsData[key] = paramProps[key]
+    }
+  }
+  return propsData
+}
+
 export function removeElement(el) {
     if (typeof el.remove !== 'undefined') {
         el.remove()
