@@ -1,5 +1,3 @@
-import { VUE_INSTALLER } from "./response";
-
 const querifier = {
     querifyable : ['search','with','searchFields','searchJoin','filter','orderBy','meta'],
     /*
