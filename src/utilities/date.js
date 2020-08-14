@@ -130,7 +130,7 @@ export const VUE_INSTALLER = (Vue)=>{
         return;
     }
 
-    Vue._date = date
+    Vue._date = dateUtil
 
     Object.defineProperties(Vue.prototype,{
         $_date:{
