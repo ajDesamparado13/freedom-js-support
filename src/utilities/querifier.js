@@ -23,7 +23,7 @@ const querifier = {
         var queries = []
         // IF PARAMETER IS AN OBJECT THEN BUILD QUERY STRING FROM OBJECT
         if(typeof params == 'object'){
-            queries = queries.concat(this.querify(params,0));
+            queries = queries.concat(this.querify(params,0,{encode}));
         }
 
         if(queries.length === 0){
@@ -31,17 +31,16 @@ const querifier = {
         }
 
         let queryString = queries.join('&')
-
-        if(encode){
-            queryString =  encodeURIComponent(queryString)
-        }
-
         return "?" +  queryString
     },
-    querify(params,level=1,delimeter="="){
+    querify(params,level=1,config={}){
         if(!params){
             return [];
         }
+
+        let delimeter = config['delimeter'] || '='
+        let encode = config['encode'] || false
+
         var queries = [];
         for(let key in params){
             var param = params[key];
@@ -52,7 +51,7 @@ const querifier = {
             const is_queryfyable = this.querifyable.includes(key);
 
             if(typeof param == 'object' && !is_array && is_queryfyable){
-                queries.push( this.getCriteriaString(param,key) );
+                queries.push( this.getCriteriaString(param,key,{encode}) );
                 continue;
             }
 
@@ -60,7 +59,7 @@ const querifier = {
                 queries.push(`${key}=${param.join( is_queryfyable ? ';' : ',')}`)
             }
             else if(typeof param == 'object'){
-                queries = queries.concat(this.querify(param,level+1));
+                queries = queries.concat(this.querify(param,level+1,{encode}));
             }
             else if(param || typeof param == 'number'){
                 queries.push(key+delimeter+param)
@@ -73,33 +72,30 @@ const querifier = {
     * refer to http://andersonandra.de/l5-repository/#using-the-requestcriteria for sample query strings
     * @returns string
     */
-    getCriteriaString(params,key){
-        var searches = [];
-        for(let key in params){
-            var val = params[key];
-
-            if(val === "" || val === null || typeof val === 'undefined'){
-                continue;
+    getCriteriaString(params,name,{encode=false}){
+        let criteriaString = Object.keys(params).reduce((searches,key,index)=>{
+            var value = Array.isArray(value) ? params[key].join(',') : params[key];
+            const is_empty =  ['',null,undefined,'undefined'].includes(value);
+            if(is_empty){
+                return searches;
             }
+            searches.push(`${key}:${value}`);
+            return searches;
+        },[]).join(';');
 
-            if(Array.isArray(val)){
-                if(val.length > 0){
-                    searches.push(`${key}:${val.join(',')}`)
-                }
-                continue;
-            }
-
-            searches.push(`${key}:${val}`);
-        }
-        return key+"="+searches.join(';');
+        return name + "=" + (encode ? encodeURIComponent(criteriaString) : criteriaString);
     },
-    objectify(queryString){
-        if(!queryString || typeof queryString === 'undefined'){
-            return "";
+    getQueryObject(queryString){
+        if(!queryString || typeof queryString != 'string'){
+            return typeof queryString === 'object' ? queryString : "";
         }
+
         if(queryString.indexOf('?') === 0 ){
             queryString = queryString.slice(1);
         }
+        return this.objectify(queryString);
+    },
+    objectify(queryString){
         let query = {}
         let splits = queryString.split('&');
         for(let index in splits){
@@ -110,16 +106,18 @@ const querifier = {
                 continue;
             }
 
-            let params = queryValue.split(';')
-            let queryObject = {}
-            params.forEach((param)=>{
-                let [field, value] = param.split(':')
-                queryObject[field] = value;
-            })
-
-            query[queryField] = queryObject
+            query[queryField] = this.getCriteriaObject(queryValue,queryField);
         }
         return query;
+    },
+    getCriteriaObject(_params,{decode=false}){
+        let params = Array.isArray(_params) ? _params : _params.split(';');
+        let queryObject = {}
+        params.forEach((param)=>{
+            let [field,value] = param.split(':');
+            queryObject[field] = decode ? decodeURIComponent(value) : value;
+        })
+        return queryObject;
     }
 }
 
