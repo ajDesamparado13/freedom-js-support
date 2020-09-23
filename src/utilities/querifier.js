@@ -55,7 +55,7 @@ const querifier = {
                 continue;
             }
 
-            if(is_array){
+            if(is_array && param.length > 0){
                 queries.push(`${key}=${param.join( is_queryfyable ? ';' : ',')}`)
             }
             else if(typeof param == 'object'){
@@ -74,7 +74,7 @@ const querifier = {
     */
     getCriteriaString(params,name,{encode=false}){
         let criteriaString = Object.keys(params).reduce((searches,key,index)=>{
-            var value = Array.isArray(value) ? params[key].join(',') : params[key];
+            var value = Array.isArray(params[key]) ? params[key].join(',') : params[key];
             const is_empty =  ['',null,undefined,'undefined'].includes(value);
             if(is_empty){
                 return searches;
