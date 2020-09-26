@@ -38,9 +38,6 @@ const querifier = {
             return [];
         }
 
-        let delimeter = config['delimeter'] || '='
-        let encode = config['encode'] || false
-
         var queries = [];
         for(let key in params){
             var param = params[key];
@@ -51,7 +48,7 @@ const querifier = {
             const is_queryfyable = this.querifyable.includes(key);
 
             if(typeof param == 'object' && !is_array && is_queryfyable){
-                queries.push( this.getCriteriaString(param,key,{encode}) );
+                queries.push( this.getCriteriaString(param,key,config) );
                 continue;
             }
 
@@ -59,7 +56,7 @@ const querifier = {
                 queries.push(`${key}=${param.join( is_queryfyable ? ';' : ',')}`)
             }
             else if(typeof param == 'object'){
-                queries = queries.concat(this.querify(param,level+1,{encode}));
+                queries = queries.concat(this.querify(param,level+1,config));
             }
             else if(param || typeof param == 'number'){
                 queries.push(key+delimeter+param)
@@ -72,7 +69,11 @@ const querifier = {
     * refer to http://andersonandra.de/l5-repository/#using-the-requestcriteria for sample query strings
     * @returns string
     */
-    getCriteriaString(params,name,{encode=false}){
+    getCriteriaString(params,name,config={}){
+        if(!params){
+            return;
+        }
+        let encode = config.encode || false
         let criteriaString = Object.keys(params).reduce((searches,key,index)=>{
             var value = Array.isArray(params[key]) ? params[key].join(',') : params[key];
             const is_empty =  ['',null,undefined,'undefined'].includes(value);
@@ -96,6 +97,10 @@ const querifier = {
         return this.objectify(queryString);
     },
     objectify(queryString){
+        if(!queryString){
+            return;
+        }
+
         let query = {}
         let splits = queryString.split('&');
         for(let index in splits){
@@ -110,14 +115,17 @@ const querifier = {
         }
         return query;
     },
-    getCriteriaObject(_params,{decode=false}){
+    getCriteriaObject(_params,config={}){
+        if(!_params){
+            return;
+        }
+        let decode = config.decode || false
         let params = Array.isArray(_params) ? _params : _params.split(';');
-        let queryObject = {}
-        params.forEach((param)=>{
+        return params.reduce((queryObject,param,key)=>{
             let [field,value] = param.split(':');
             queryObject[field] = decode ? decodeURIComponent(value) : value;
-        })
-        return queryObject;
+            return queryObject
+        },{});
     }
 }
 
