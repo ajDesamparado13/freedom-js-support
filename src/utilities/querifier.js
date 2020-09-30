@@ -38,6 +38,7 @@ const querifier = {
             return [];
         }
 
+        let delimeter = config.delimeter || '=';
         var queries = [];
         for(let key in params){
             var param = params[key];
@@ -128,7 +129,6 @@ const querifier = {
         },{});
     }
 }
-
 export const VUE_INSTALLER = ( Vue ) => {
     if(Vue._querifier){
         return;
