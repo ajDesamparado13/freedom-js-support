@@ -21,7 +21,7 @@ const formatter = {
   getObjectParameters(param,addon={}){
       let [format, ...parameters] = param.split('|');
       let options = Object.assign(parameters.reduce((obj,option)=>{
-          let [key,args] = optoin.split(':');
+          let [key,args] = option.split(':');
           obj[key] = args.split(',');
           return obj
       },{}),addon);
