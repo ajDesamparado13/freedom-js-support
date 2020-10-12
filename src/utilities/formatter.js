@@ -201,6 +201,9 @@ export const VUE_INSTALLER = (Vue) => {
   }
 
   Vue._formatter = formatter
+  Vue.filter('format',(value,type,options)=>{
+      return formatter.format(value,type,options)
+  })
 
   Object.defineProperties(Vue.prototype,{
       $_formatter:{

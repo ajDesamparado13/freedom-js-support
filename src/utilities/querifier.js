@@ -71,10 +71,11 @@ const querifier = {
     * @returns string
     */
     getCriteriaString(params,name,config={}){
-        if(!params){
+        if(!params || !name ){
             return;
         }
-        let encode = config.encode || false
+        let valueOnly = Boolean(config.valueOnly || false);
+        let encode = Boolean(config.encode || false);
         let criteriaString = Object.keys(params).reduce((searches,key,index)=>{
             var value = Array.isArray(params[key]) ? params[key].join(',') : params[key];
             const is_empty =  ['',null,undefined,'undefined'].includes(value);
@@ -84,7 +85,9 @@ const querifier = {
             searches.push(`${key}:${value}`);
             return searches;
         },[]).join(';');
-
+        if(valueOnly){
+            return encode ? encodeURIComponent(criteriaString) : criteriaString;
+        }
         return name + "=" + (encode ? encodeURIComponent(criteriaString) : criteriaString);
     },
     getQueryObject(queryString){
