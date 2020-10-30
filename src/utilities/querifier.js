@@ -1,5 +1,5 @@
 const querifier = {
-    querifyable : ['search','with','searchFields','searchJoin','filter','orderBy','meta'],
+    querifyable : ['search','with','searchFields','searchJoin','filter','orderBy'],
     /*
     * GET THE QUERY PARAMETER STRING
     * IF OBJECT: { search: {field1:value1, field2:value2 }}
@@ -42,7 +42,10 @@ const querifier = {
         var queries = [];
         for(let key in params){
             var param = params[key];
-            if(typeof param === 'function' || typeof param === 'undefined'){
+            if(
+                typeof param === 'function' ||
+                typeof param === 'undefined' ||
+                ( typeof param === 'object' && Object.keys(param).length <= 0)){
                 continue;
             }
             const is_array = Array.isArray(param);
