@@ -4,7 +4,10 @@ const Arr = {
         return typeof tap === 'function' ? tap(config) : config
     },
     getProperty(_config, key, defaultValue, tap = null) {
-        let property = (this.getObject(_config))[key] || defaultValue
+        let property = key.split('.').reduce(( config,key ) => {
+            return this.hasProperty(config,key) ? config[key] : defaultValue;
+        },this.getObject(_config))
+
         return typeof tap === 'function' ? tap(property) : property
     },
     isObject(_config){
