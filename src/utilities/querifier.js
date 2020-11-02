@@ -42,10 +42,7 @@ const querifier = {
         var queries = [];
         for(let key in params){
             var param = params[key];
-            if(
-                typeof param === 'function' ||
-                typeof param === 'undefined' ||
-                ( typeof param === 'object' && Object.keys(param).length <= 0)){
+            if( !Boolean(param) || typeof param === 'function' || ( typeof param === 'object' && Object.keys(param).length <= 0)){
                 continue;
             }
             const is_array = Array.isArray(param);
