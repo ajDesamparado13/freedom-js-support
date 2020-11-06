@@ -11,7 +11,7 @@ const Arr = {
         return typeof tap === 'function' ? tap(property) : property
     },
     isObject(_config){
-        return typeof _config === 'object'  && !Array.isArray(_config);
+        return typeof _config === 'object'  && !Array.isArray(_config) && Boolean(_config);
     },
     hasProperty(_config,key){
         return this.isObject(_config) && _config.hasOwnProperty(key);
