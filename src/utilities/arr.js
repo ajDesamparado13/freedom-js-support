@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 const Arr = {
     getObject(_config, defaultValue = {}, tap = null) {
         let config = this.isObject(_config) ? _config : defaultValue;
@@ -15,6 +17,20 @@ const Arr = {
     },
     hasProperty(_config,key){
         return this.isObject(_config) && _config.hasOwnProperty(key);
+    },
+    clone(source,target){
+        Object.keys(target).forEach((key)=>{
+            let value = target[key];
+            Vue.set(source,key,Array.isArray(value) ? [ ...value ] : value);
+        })
+        return source;
+    },
+    /*
+     * Loosely Check if value a and b are equal
+     */
+    looseEqual(a, b, keyName=null) {
+        return ( this.isObject(a) ? ( keyName ? this.looseEqual(this.getProperty(a,keyName)) : JSON.stringify(a) ) : a  ) ===
+            ( this.isObject(b) ? ( keyName ? this.looseEqual(this.getProperty(b,keyName)) : JSON.stringify(b) ) : b )
     }
 }
 
