@@ -12,10 +12,10 @@ const response = {
 
             return error || {};
         },
-        getValidationMessages(data,{ type='error'}){
+        getValidationMessages(data){
             return Arr.getProperty(data,'errors',[]);
         },
-        getMessage(data,{ type='error'}){
+        getMessage(data){
             return Arr.getProperty(data,'message','');
         }
 
