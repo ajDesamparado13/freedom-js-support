@@ -1,3 +1,4 @@
+import Arr from './arr'
 const response = {
         getData(response,config={}){
             return response.data || {}
@@ -11,10 +12,11 @@ const response = {
 
             return error || {};
         },
-        getMessage(data,config={}){
-            return {}
-            let type = config['type'] || 'error';
-            return data[type];
+        getValidationMessages(data,{ type='error'}){
+            return Arr.getProperty(data,'errors',[]);
+        },
+        getMessage(data,{ type='error'}){
+            return Arr.getProperty(data,'message','');
         }
 
 }
