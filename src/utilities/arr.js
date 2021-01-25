@@ -58,7 +58,13 @@ const Arr = {
     looseEqual(a, b, keyName=null) {
         return ( this.isObject(a) ? ( keyName ? this.looseEqual(this.getProperty(a,keyName)) : JSON.stringify(a) ) : a  ) ===
             ( this.isObject(b) ? ( keyName ? this.looseEqual(this.getProperty(b,keyName)) : JSON.stringify(b) ) : b )
-    }
+    },
+    only(source,properties=[]){
+        return CreateArray(properties).reduce((newObject,property,index)=>{
+            newObject[property] = source[property]
+            return newObject;
+        },{})
+    },
 }
 
 export const VUE_INSTALLER = (Vue) => {
