@@ -21,7 +21,7 @@ const dateUtil = {
       }
       return value;
   },
-  fromString:(str,{ format="Y-m-d" }) => {
+  fromString(str,{ format="Y-m-d" }){
       if(!str) return '';
       str = str.replace(/[^0-9]/g,'');
       var year = str.length > 4 ? str.substring(0,4) : str;
@@ -86,7 +86,7 @@ const dateUtil = {
       return `${year}${month?'/':''}${month}${date?'/':''}${date}`
 
   },
-  format: (date=moment(), options) => {
+  format(date=moment(), options){
       var format = typeof options == 'object' ? Array.isArray(options.format ) ? options.format[0] : options.format : options;
       if(!this.isValid(value,format)){
           return date;
