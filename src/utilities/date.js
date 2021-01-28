@@ -88,7 +88,7 @@ const dateUtil = {
   },
   format(date=moment(), options){
       var format = typeof options == 'object' ? Array.isArray(options.format ) ? options.format[0] : options.format : options;
-      if(!this.isValid(value,format)){
+      if(!this.isValid(date,format)){
           return date;
       }
       date = moment(date).toObject();
