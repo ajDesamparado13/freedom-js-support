@@ -170,7 +170,7 @@ const formatter = {
     return this.isEmpty(number,'decimal') ? '' : parseFloat(number);
   },
   getDate (value, options={}) {
-    return dateUtil.fromString(this.getNumber(value).toString(), options)
+    return dateUtil.fromString(value, options)
   },
   getValue(value,type,options={}){
       if(this.isEmpty(value,type)){

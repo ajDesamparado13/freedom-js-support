@@ -26,9 +26,7 @@ const dateUtil = {
       return value;
   },
   fromString:(str,{ format="Y-m-d" }) => {
-      if(!str){
-          return '';
-      }
+      if(!str) return '';
       str = str.replace(/[^0-9]/g,'');
       var year = str.length > 4 ? str.substring(0,4) : str;
 
@@ -89,11 +87,6 @@ const dateUtil = {
               }
           }
       }
-
-      //if(str.length <= 6){
-      //    return `${year}/${month}`;
-      //}
-
       return `${year}${month?'/':''}${month}${date?'/':''}${date}`
 
   },
