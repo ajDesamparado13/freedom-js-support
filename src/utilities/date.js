@@ -1,8 +1,4 @@
 import moment from 'moment'
-const intRangeToArray = (low, max) => {
-  return _.range(low, max + 1)
-}
-
 const dateUtil = {
   getTime(val,format="YYYY-MM-DD HH:mm:ss"){
       return moment(val,format).valueOf();
@@ -92,7 +88,7 @@ const dateUtil = {
   },
   format: (date=moment(), options) => {
       var format = typeof options == 'object' ? Array.isArray(options.format ) ? options.format[0] : options.format : options;
-      if( new Date(date) == 'Invalid Date'){
+      if(!this.isValid(value,format)){
           return date;
       }
       date = moment(date).toObject();
@@ -122,6 +118,11 @@ const dateUtil = {
       }
       return moment(date).format(format)
   },
+  isValid(value,format='Y-m-d'){
+      let newDate = new Date(value)
+      return newDate !== 'Invalid Date';
+
+  }
 }
 
 export const VUE_INSTALLER = (Vue)=>{
