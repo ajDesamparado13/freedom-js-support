@@ -84,38 +84,20 @@ const dateUtil = {
           }
       }
       return `${year}${month?'/':''}${month}${date?'/':''}${date}`
-
   },
-  format(date=moment(), options){
+  create(date=moment(),options){
       var format = typeof options == 'object' ? Array.isArray(options.format ) ? options.format[0] : options.format : options;
       if(!this.isValid(date,format)){
-          return date;
+          return 'Invalid Date';
       }
-      date = moment(date).toObject();
-      var day = date.date;
-      var month = date.months+1;
-      var year = date.years;
-      switch(format){
-          case 'a':
-              //sample 2017年 5月3 日 （金)
-              return `${year}年${month}月${day}日`
-              break;
-          case 'b':
-              //sample 2017年 5月3 日
-              return `${year}年${month}月${day}日`
-              break;
-          case 'c':
-              //sample 2017年 5月3 日
-              return `${year}年${month}月`
-              break;
-          case 'd':
-              //sample 2017年 5月3 日
-              return `${year.toString().substring(2,4)}年${month}月期`
-              break;
-          case 'z':
-              return `${year}/${ month >= 10 ? month : '0'+month}/${day >= 10 ? day : '0'+day}`
-              break;
-      }
+      return moment(date);
+  },
+  format(value=moment(), options){
+      let date = this.create(value,options);
+
+      if(date === 'Invalid Date') return date;
+
+      var format = typeof options == 'object' ? Array.isArray(options.format ) ? options.format[0] : options.format : options;
       return moment(date).format(format)
   },
   isValid(value,format='Y-m-d'){
