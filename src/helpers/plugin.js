@@ -9,7 +9,7 @@ export const use = (plugin) => {
 export const setDefaultProps = (props,defaults) => {
   Object.keys(props).forEach((key)=>{
     if(Arr.isObject(props[key])){
-      props[key].default = Arr.getProperty(defaults,key,props[key])
+      props[key].default = Arr.getProperty(defaults,key,props[key].default)
       return
     }
     props[key] = Arr.getProperty(defaults,key,props[key])
