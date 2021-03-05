@@ -1,6 +1,6 @@
 {
   "name": "freedom-js-support",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "Freedom Javascript Utilities",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,10 @@
   },
   "homepage": "https://github.com/ajDesamparado13/freedom-js-support#readme",
   "dependencies": {
-    "moment": "^2.27.0"
+    "moment": "^2.27.0",
+    "pluralize": "^8.0.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
