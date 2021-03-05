@@ -486,13 +486,36 @@ const Str = {
      */
     joinWith(valueA,valueB,connector){
         return this.removeSuffix(valueA,connector) + connector + this.removePrefix(valueB,connector);
-    }
+    },
+    /**
+     * Mask the string after the specified length of characters from left
+     * @param string subject 
+     * @param integer length 
+     * @param string mask 
+     * @return string
+     */
+    maskFromLeft(subject,length,mask='*'){
+        return this.padRight(subject.substring(0,length),subject.length - length, mask);
+    },
+    /**
+     * Mask the string before the specified length of characters from right
+     * @param string subject 
+     * @param integer length 
+     * @param string mask 
+     * @return string
+     */
+    maskToRight(subject,length){
+        return this.padLeft(subject.substring(length*-1),subject.length - length, mask);
+    },
 }
 
 export const VUE_INSTALLER = (Vue) => {
   if(Vue._Str){
       return;
   }
+  Object.keys(Str).forEach((key)=>{
+      if(!String.prototype.hasOwnProperty(key)) Object.defineProperty(String.prototype,key,Str[key]);
+  });
   Vue._Str = Str
   Object.defineProperties(Vue.prototype,{
       $_Str:{
