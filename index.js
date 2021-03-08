@@ -6,6 +6,7 @@ import { VUE_INSTALLER as masks} from './src/utilities/masks'
 import { VUE_INSTALLER as formatter} from './src/utilities/formatter'
 import { VUE_INSTALLER as date} from './src/utilities/date'
 import { VUE_INSTALLER as arr} from './src/utilities/arr'
+import { VUE_INSTALLER as str} from './src/utilities/str'
 
 const HelperUtility = {
     response,
@@ -16,6 +17,7 @@ const HelperUtility = {
     date,
     formatter,
     arr,
+    str,
 }
 
 
