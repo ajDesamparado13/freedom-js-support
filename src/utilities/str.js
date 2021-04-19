@@ -242,7 +242,7 @@ const Str = {
     * @return string
     */
    padLeft(value,length,pad=' '){
-       return  pad.repeat(length) + value;
+       return  pad.repeat(Math.abs( length )) + value;
    },
     /**
     * Pad the right side of a string with another.
@@ -253,7 +253,7 @@ const Str = {
     * @return string
     */
    padRight(value,length,pad=' '){
-       return value + pad.repeat(length);
+       return value + pad.repeat(Math.abs(length));
    },
     /**
     * Get the plural form of an English word.
