@@ -231,6 +231,7 @@ const Str = {
     * @return string
     */
    padBoth(value,length,pad=' '){
+       length = Math.abs(length);
        return pad.repeat(length) + value + pad.repeat(length) 
    },
     /**
