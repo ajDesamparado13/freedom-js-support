@@ -232,7 +232,7 @@ const Str = {
     */
    padBoth(value,length,pad=' '){
        length = Math.abs(length);
-       return pad.repeat(length) + value + pad.repeat(length) 
+       return this.repeat(pad,length) + value + this.repeat(pad,length)
    },
     /**
     * Pad the left side of a string with another.
@@ -243,7 +243,7 @@ const Str = {
     * @return string
     */
    padLeft(value,length,pad=' '){
-       return  pad.repeat(Math.abs( length )) + value;
+       return this.repeat(pad,length) + value;
    },
     /**
     * Pad the right side of a string with another.
@@ -254,7 +254,7 @@ const Str = {
     * @return string
     */
    padRight(value,length,pad=' '){
-       return value + pad.repeat(Math.abs(length));
+       return value + this.repeat(pad,length);
    },
     /**
     * Get the plural form of an English word.
@@ -508,6 +508,33 @@ const Str = {
     maskToRight(subject,length){
         return this.padLeft(subject.substring(length*-1),subject.length - length, mask);
     },
+    repeat(str,count){
+        if (str == null) throw new TypeError('can\'t convert ' + this + ' to object');
+
+        var str = '' + str;
+        // To convert string to integer.
+        count = +count;
+        // Check NaN
+        if (count != count)
+        count = 0;
+        count = Math.floor(count);
+        count = Math.abs(count);
+        if (str.length == 0 || count == 0) return '';
+
+        // Ensuring count is a 31-bit integer allows us to heavily optimize the
+        // main part. But anyway, most current (August 2014) browsers can't handle
+        // strings 1 << 28 chars or longer, so:
+        if (str.length * count >= 1 << 28) throw new RangeError('repeat count must not overflow maximum string size');
+
+        var maxCount = str.length * count;
+        count = Math.floor(Math.log(count) / Math.log(2));
+        while (count) {
+        str += str;
+        count--;
+        }
+        str += str.substring(0, maxCount - str.length);
+        return str;
+    }
 }
 
 export const VUE_INSTALLER = (Vue) => {
