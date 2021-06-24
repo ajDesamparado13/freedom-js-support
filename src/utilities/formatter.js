@@ -177,20 +177,19 @@ const formatter = {
           return value;
       }
       switch(type){
+          case 'digit':
+                return value.replace(/[^\d]/g,''); break;
           case 'integer':
           case 'percentage':
           case 'number':
-              value = this.getNumber(value,options);
-              break;
+              return this.getNumber(value,options); break;
           case 'currency':
           case 'double':
           case 'decimal':
           case 'float':
-              value = this.getDecimal(value,options);
-              break;
+              return this.getDecimal(value,options); break;
           case 'date':
-              value = this.getDate(value,options)
-              break;
+              return this.getDate(value,options); break;
       }
       return value;
   },

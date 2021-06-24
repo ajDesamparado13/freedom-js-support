@@ -38,6 +38,12 @@ const only = {
     }
     event.preventDefault()
   },
+  digit_keys(event,options = {}){
+    var key = this.getKey(event)
+    if (this.is_special_key(key)) { return }
+    if ((event.shiftKey === false && key > 47 && key < 60) || !isNaN(Number(event.key))) { return }
+    event.preventDefault()
+  },
   decimal_keys (event, options = {}) {
     let { type } = Object.assign({
       type: 'signed'
