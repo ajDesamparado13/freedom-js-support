@@ -127,7 +127,7 @@ const Str = {
      * @return string
      */
     finish(value,cap){
-        return this.endsWith(value,cap) ? value + cap : value
+        return this.endsWith(value,cap) ? value : value  + cap 
     },
     /**
     * Determine if a given string matches a given pattern.
