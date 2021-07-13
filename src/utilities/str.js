@@ -476,7 +476,8 @@ const Str = {
      * @return string
      */
     removeSuffix(value,suffix){
-        return this.finish(value,suffix).substring(-1);
+        let newLength =  value.length - 1 
+        return this.finish(value,suffix).substring(newLength < 0 ? 0 : newLength);
     },
     /**
      *  Joins Two String with one character
