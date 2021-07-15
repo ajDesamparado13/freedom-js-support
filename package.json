@@ -1,6 +1,6 @@
 {
   "name": "freedom-js-support",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "description": "Freedom Javascript Utilities",
   "main": "index.js",
   "scripts": {
