@@ -477,8 +477,10 @@ const Str = {
      */
     removeSuffix(value,suffix){
         let newString = this.finish(value,suffix);
-        let newLength =  newString.length - 1 
-        return newString.substring(0,newLength < 0 ? 0 : newLength);
+        return newString.slice(0,-1);
+    },
+    removeEdge(value,edge){
+        return this.removeSuffix(this.removePrefix(value,edge),edge)
     },
     /**
      *  Joins Two String with one character
